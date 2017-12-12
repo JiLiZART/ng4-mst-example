@@ -4,27 +4,30 @@ MobX is a battle tested library that makes state management simple and scalable 
 
 ---
 
-##Philosophy
+## Philosophy
+
+![Scheme](https://mobx.js.org/docs/flow.png)
+
+---
 
 The philosophy behind MobX is very simple:
 Anything that can be derived from the application state, should be derived. Automatically.
 
 which includes the UI, data serialization, server communication, etc.
 
-![Scheme](https://mobx.js.org/docs/flow.png)
 
 ---
 
-##Concepts
+## Concepts
 
 ---
 
-###State
+### State
 State is the data that drives your application. Usually there is domain specific state like a list of todo items and there is view state such as the currently selected element
 
 ---
 
-###Derivations
+### Derivations
 
 - Computed values
 These are values that can always be derived from the current observable state using a pure function.
@@ -33,7 +36,7 @@ These are values that can always be derived from the current observable state us
  
 ---
  
-###Actions
+### Actions
 
 An action is any piece of code that changes the state. User events, backend data pushes, scheduled events, etc. An action is like a user that enters a new value in a spreadsheet cell.
 
@@ -74,11 +77,11 @@ class TodoStore {
 ```typescript
 const todoStore = new TodoStore();
 
-const autorunUnsubscribe = autorun(() => {
+autorun(() => {
   console.log("Completed todos", todoStore.doneCount)
 })
 
-const reactionUnsubscribe = reaction(
+reaction(
     () => todoStore.count,
     count => console.log("Todos count", count)
 );
@@ -87,24 +90,31 @@ const reactionUnsubscribe = reaction(
 
 ---
 
-#Mobx State Tree
+# Mobx State Tree
 
 is a state container that combines the simplicity and ease of mutable data with the traceability of immutable data and the reactiveness and performance of observable data.
+
+---
 
 Central in MST (mobx-state-tree) is the concept of a living tree. The tree consists of mutable, but strictly protected objects enriched with runtime type information. In other words; each tree has a shape (type information) and state (data). From this living tree, immutable, structurally shared, snapshots are generated automatically.
 
 ---
 
+## Trees, types and state
+
+
 With MobX state tree, you build, as the name suggests, trees of models.
 
-Trees, types and state
 Each node in the tree is described by two things: Its type (the shape of the thing) and its data (the state it is currently in).
 
 ---
 
-The simplest tree possible:
+The types.model type declaration is used to describe the shape of an object. Other built-in types include arrays, maps, primitives etc. See the types overview. The type information will be used for both.
+
+---
+
 ```typescript
-import { types, onSnapshot } from "mobx-state-tree"
+import {types} from "mobx-state-tree"
 
 const Todo = types
   .model("Todo", {
