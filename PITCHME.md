@@ -15,7 +15,6 @@ Anything that can be derived from the application state, should be derived. Auto
 
 which includes the UI, data serialization, server communication, etc.
 
-
 ---
 
 ## Concepts
@@ -23,15 +22,17 @@ which includes the UI, data serialization, server communication, etc.
 ---
 
 ### State
-State is the data that drives your application. Usually there is domain specific state like a list of todo items and there is view state such as the currently selected element
+**State** is the data that drives your application. Usually there is domain specific state like a list of todo items and there is view state such as the currently selected element
 
 ---
 
 ### Derivations
 
-- Computed values
+- **Computed** values
+<br>
 These are values that can always be derived from the current observable state using a pure function.
-- Reactions
+- **Reactions**
+<br>
  Reactions are side effects that need to happen automatically if the state changes.
  
 ---
@@ -46,8 +47,7 @@ An action is any piece of code that changes the state. User events, backend data
 import {observable, computed, action, autorun, reaction} from 'mobx';
 
 class Todo {
-  @observable text
-  @observable done
+  constructor(public @observable text, public @observable done) {}
 }
 
 class TodoStore {
@@ -63,7 +63,7 @@ class TodoStore {
   }
 
   @action addTodo(text, done = false) {
-    this.todos.push({text, done});
+    this.todos.push(new Todo(text, done));
   }
 
   @action modifyNotRelated() {
@@ -78,8 +78,18 @@ class TodoStore {
 const todoStore = new TodoStore();
 
 autorun(() => {
-  console.log("Completed todos", todoStore.doneCount)
+  console.log("Completed todos ", todoStore.doneCount)
 })
+
+// prints "Completed todos 0"
+
+todoStore.addTodo("Done todo", true);
+
+// prints "Completed todos 1"
+
+todoStore.modifyNotRelated()
+
+// prints nothing
 
 reaction(
     () => todoStore.count,
@@ -92,16 +102,15 @@ reaction(
 
 # Mobx State Tree
 
-is a state container that combines the simplicity and ease of mutable data with the traceability of immutable data and the reactiveness and performance of observable data.
+is a `state` container that combines the simplicity and ease of mutable data with the traceability of immutable data and the reactiveness and performance of observable data.
 
 ---
 
-Central in MST (mobx-state-tree) is the concept of a living tree. The tree consists of mutable, but strictly protected objects enriched with runtime type information. In other words; each tree has a shape (type information) and state (data). From this living tree, immutable, structurally shared, snapshots are generated automatically.
+Central in MST (mobx-state-tree) is the concept of a __living tree__. The tree consists of mutable, but strictly protected objects enriched with __runtime type information__. In other words; each __tree has a shape__ (type information) and state (data).
 
 ---
 
 ## Trees, types and state
-
 
 With MobX state tree, you build, as the name suggests, trees of models.
 
@@ -109,7 +118,7 @@ Each node in the tree is described by two things: Its type (the shape of the thi
 
 ---
 
-The types.model type declaration is used to describe the shape of an object. Other built-in types include arrays, maps, primitives etc. See the types overview. The type information will be used for both.
+The `types.model` type declaration is used to describe the shape of an object. Other built-in types include arrays, maps, primitives etc.
 
 ---
 
@@ -157,7 +166,9 @@ store.todos[0].toggle()
 
 ###Runtime errors support
 
-!(Runtime error)[https://github.com/mobxjs/mobx-state-tree/blob/master/docs/tserror.png]
+![Runtime error](https://github.com/mobxjs/mobx-state-tree/blob/master/docs/tserror.png)
+
+---
 
 Because state trees are living, mutable models, actions are straight-forward to write; just modify local instance properties where appropriate. See `toggleTodo()` above or the examples below. It is not necessary to produce a new state tree yourself, MST's snapshot functionality will derive one for you automatically.
 
