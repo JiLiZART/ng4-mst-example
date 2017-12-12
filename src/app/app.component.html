@@ -1,0 +1,20 @@
+<div class="app" *mobxAutorun>
+  <div class="canvas">
+    <svg>
+      <ng-container *ngFor="let arrow of store.arrows">
+        <svg:path class="arrow" [attr.d]="arrowPosition(arrow)"/>
+      </ng-container>
+    </svg>
+
+    <ng-container *ngFor="let box of store.boxesArray">
+      <div appDraggable
+           [ngClass]="isBoxSelected(box)"
+           [ngStyle]="boxStyle(box)"
+           (click)="handleBoxClick($event, box)"
+           (move)="onDragEdge($event, box)"
+      >{{box.name}}</div>
+    </ng-container>
+  </div>
+  <app-sidebar [selection]="store.selection"></app-sidebar>
+  <app-generator></app-generator>
+</div>

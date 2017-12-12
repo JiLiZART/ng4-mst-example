@@ -1,0 +1,6 @@
+<div class="sidebar sidebar-open" *ngIf="selection">
+  <small>(control click the canvas to create new boxes)</small>
+  <hr/>
+  Caption:
+  <input (change)="onChange($event)" [value]="selection.name"/>
+</div>
