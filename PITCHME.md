@@ -44,10 +44,17 @@ An action is any piece of code that changes the state. User events, backend data
 ---
 
 ```typescript
-import {observable, computed, action, autorun, reaction} from 'mobx';
+import {
+  observable, 
+  computed, action, 
+  autorun, reaction
+} from 'mobx';
 
 class Todo {
-  constructor(public @observable text, public @observable done) {}
+  constructor(
+    public @observable text, 
+    public @observable done
+  ) {}
 }
 
 class TodoStore {
@@ -59,7 +66,8 @@ class TodoStore {
   }
 
   @computed get doneCount() {
-    return this.todos.filter(todo => todo.done).length;
+    return this.todos
+      .filter(todo => todo.done).length;
   }
 
   @action addTodo(text, done = false) {
@@ -112,20 +120,23 @@ export class MyModule {}
 ---
 
 ```
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import {store} from './store/counter';
+import { 
+  Component, 
+  ChangeDetectionStrategy 
+} from '@angular/core';
+import {todoStore} from './store/todo';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div *mobxAutorun>
-      {{ store.value }} - {{ store.computedValue }}
-      <button (click)="store.action">Action</button>
+      Completed todos {{ todoStore.doneCount }} / {{ todoStore.count }}
+      <button (click)="todoStore.addTodo">Action</button>
     </div>
   `
 })
 export class AppComponent {
-    store = store;
+    store = todoStore;
 }
 ```
 
@@ -137,19 +148,19 @@ is a `state` container that combines the simplicity and ease of mutable data wit
 
 ---
 
-Central in MST (mobx-state-tree) is the concept of a __living tree__. The tree consists of mutable, but strictly protected objects enriched with __runtime type information__. In other words; each __tree has a shape__ (type information) and state (data).
+Central in MST (mobx-state-tree) is the concept of a __living tree__. The tree consists of __mutable__, but __strictly protected objects__ enriched with __runtime type information__. In other words; each __tree has a shape__ (type information) and __state__ (data).
 
 ---
 
 ## Trees, types and state
 
-With MobX state tree, you build, as the name suggests, trees of models.
+With MobX state tree, you build, as the name suggests, __trees of models__.
 
-Each node in the tree is described by two things: Its type (the shape of the thing) and its data (the state it is currently in).
+Each node in the tree is described by two things: Its __type__ (the shape of the thing) and its __data__ (the state it is currently in).
 
 ---
 
-The `types.model` type declaration is used to describe the shape of an object. Other built-in types include arrays, maps, primitives etc.
+The __types.model__ type declaration is used to describe the shape of an object. Other built-in types include arrays, maps, primitives etc.
 
 ---
 
@@ -197,11 +208,11 @@ store.todos[0].toggle()
 
 ###Runtime errors support
 
-![Runtime error](https://github.com/mobxjs/mobx-state-tree/blob/master/docs/tserror.png)
+![Runtime error](https://github.com/mobxjs/mobx-state-tree/raw/master/docs/tserror.png)
 
 ---
 
-Because state trees are living, mutable models, actions are straight-forward to write; just modify local instance properties where appropriate. See `toggleTodo()` above or the examples below. It is not necessary to produce a new state tree yourself, MST's snapshot functionality will derive one for you automatically.
+Because state trees are __living__, __mutable models__, actions are straight-forward to write; just modify local instance properties where appropriate. See __toggleTodo()__ above or the examples below. It is not necessary to produce a new state tree yourself, MST's snapshot functionality will derive one for you automatically.
 
 ---
 
