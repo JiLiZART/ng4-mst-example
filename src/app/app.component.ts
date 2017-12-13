@@ -58,11 +58,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     box.move(pos.x, pos.y);
   }
 
-  onCanvasClick(e) {
-    if (e.ctrlKey === false) {
-      this.store.setSelection(null)
+  onCanvasClick(e: MouseEvent) {
+    if (e.ctrlKey === true || e.metaKey === true) {
+      this.store.createBox('Hi.', e.clientX - 50, e.clientY - 20, store.selection);
     } else {
-      this.store.createBox("Hi.", e.clientX - 50, e.clientY - 20, store.selection)
+      this.store.setSelection(null);
     }
   }
 }
