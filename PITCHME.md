@@ -100,6 +100,37 @@ reaction(
 
 ---
 
+```
+import { MobxAngularModule } from 'mobx-angular';
+
+@NgModule({
+    imports: [..., MobxAngularModule]
+})
+export class MyModule {}
+```
+
+---
+
+```
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {store} from './store/counter';
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <div *mobxAutorun>
+      {{ store.value }} - {{ store.computedValue }}
+      <button (click)="store.action">Action</button>
+    </div>
+  `
+})
+export class AppComponent {
+    store = store;
+}
+```
+
+---
+
 # Mobx State Tree
 
 is a `state` container that combines the simplicity and ease of mutable data with the traceability of immutable data and the reactiveness and performance of observable data.
