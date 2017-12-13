@@ -206,7 +206,7 @@ store.todos[0].toggle()
 
 ---
 
-###Runtime errors support
+## Runtime errors support
 
 ![Runtime error](https://github.com/mobxjs/mobx-state-tree/raw/master/docs/tserror.png)
 
@@ -216,7 +216,7 @@ Because state trees are __living__, __mutable models__, actions are straight-for
 
 ---
 
-###Liveliness guarantees
+## Liveliness guarantees
 
 A pretty unique feature of MST; it will throw when reading or writing from objects that are no longer part of a state tree. This protects you against accidental stale reads of objects still referred by, for example, a closure.
 
