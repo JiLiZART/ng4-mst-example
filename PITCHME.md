@@ -131,7 +131,7 @@ import {todoStore} from './store/todo';
   template: `
     <div *mobxAutorun>
       Completed todos {{ todoStore.doneCount }} / {{ todoStore.count }}
-      <button (click)="todoStore.addTodo">Action</button>
+      <button (click)="todoStore.addTodo()">Action</button>
     </div>
   `
 })
