@@ -15,8 +15,8 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
   }
 
-  onChange($event) {
-    this.selection.setName($event.target.value);
+  onChange(value) {
+    this.selection.setName(value);
   }
 
 }

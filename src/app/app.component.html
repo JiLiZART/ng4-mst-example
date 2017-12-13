@@ -1,5 +1,5 @@
 <div class="app" *mobxAutorun>
-  <div class="canvas">
+  <div class="canvas" (click)="onCanvasClick($event)">
     <svg>
       <ng-container *ngFor="let arrow of store.arrows">
         <svg:path class="arrow" [attr.d]="arrowPosition(arrow)"/>

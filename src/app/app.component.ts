@@ -57,4 +57,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   onDragEdge(pos: Position, box) {
     box.move(pos.x, pos.y);
   }
+
+  onCanvasClick(e) {
+    if (e.ctrlKey === false) {
+      this.store.setSelection(null)
+    } else {
+      this.store.createBox("Hi.", e.clientX - 50, e.clientY - 20, store.selection)
+    }
+  }
 }
