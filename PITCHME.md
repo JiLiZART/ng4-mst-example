@@ -240,6 +240,6 @@ store.removeTodo(0)
 
 ---
 
-###Angular4 MST Demo
+### Angular4 MST Demo
 
 https://github.com/JiLiZART/ng4-mst-example
